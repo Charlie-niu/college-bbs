@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.charlie.college_bbs.bean.User">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <result column="RealName" jdbcType="VARCHAR" property="realname" />
+    <result column="Password" jdbcType="VARCHAR" property="password" />
+    <result column="RegisterDate" jdbcType="BIGINT" property="registerdate" />
+    <result column="Enabled" jdbcType="BIT" property="enabled" />
+    <result column="Email" jdbcType="VARCHAR" property="email" />
+    <result column="Phone" jdbcType="VARCHAR" property="phone" />
+    <result column="CollegeID" jdbcType="VARCHAR" property="collegeid" />
+    <result column="CollegeName" jdbcType="VARCHAR" property="collegename" />
+    <result column="Gender" jdbcType="VARCHAR" property="gender" />
+    <result column="Age" jdbcType="INTEGER" property="age" />
+    <result column="Hobby" jdbcType="VARCHAR" property="hobby" />
+    <result column="UserFace" jdbcType="VARCHAR" property="userface" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.charlie.college_bbs.bean.User">
+    <result column="AboutMe" jdbcType="LONGVARCHAR" property="aboutme" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, UserName, RealName, Password, RegisterDate, Enabled, Email, Phone, CollegeID, 
+    CollegeName, Gender, Age, Hobby, UserFace
+  </sql>
+  <sql id="Blob_Column_List">
+    AboutMe
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from base_user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from base_user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.charlie.college_bbs.bean.User">
+    insert into base_user (ID, UserName, RealName, 
+      Password, RegisterDate, Enabled, 
+      Email, Phone, CollegeID, 
+      CollegeName, Gender, Age, 
+      Hobby, UserFace, AboutMe
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{registerdate,jdbcType=BIGINT}, #{enabled,jdbcType=BIT}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{collegeid,jdbcType=VARCHAR}, 
+      #{collegename,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{hobby,jdbcType=VARCHAR}, #{userface,jdbcType=VARCHAR}, #{aboutme,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.charlie.college_bbs.bean.User">
+    insert into base_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="username != null">
+        UserName,
+      </if>
+      <if test="realname != null">
+        RealName,
+      </if>
+      <if test="password != null">
+        Password,
+      </if>
+      <if test="registerdate != null">
+        RegisterDate,
+      </if>
+      <if test="enabled != null">
+        Enabled,
+      </if>
+      <if test="email != null">
+        Email,
+      </if>
+      <if test="phone != null">
+        Phone,
+      </if>
+      <if test="collegeid != null">
+        CollegeID,
+      </if>
+      <if test="collegename != null">
+        CollegeName,
+      </if>
+      <if test="gender != null">
+        Gender,
+      </if>
+      <if test="age != null">
+        Age,
+      </if>
+      <if test="hobby != null">
+        Hobby,
+      </if>
+      <if test="userface != null">
+        UserFace,
+      </if>
+      <if test="aboutme != null">
+        AboutMe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="registerdate != null">
+        #{registerdate,jdbcType=BIGINT},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeid != null">
+        #{collegeid,jdbcType=VARCHAR},
+      </if>
+      <if test="collegename != null">
+        #{collegename,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="hobby != null">
+        #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="userface != null">
+        #{userface,jdbcType=VARCHAR},
+      </if>
+      <if test="aboutme != null">
+        #{aboutme,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.charlie.college_bbs.bean.User">
+    update base_user
+    <set>
+      <if test="username != null">
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        RealName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        Password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="registerdate != null">
+        RegisterDate = #{registerdate,jdbcType=BIGINT},
+      </if>
+      <if test="enabled != null">
+        Enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="email != null">
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeid != null">
+        CollegeID = #{collegeid,jdbcType=VARCHAR},
+      </if>
+      <if test="collegename != null">
+        CollegeName = #{collegename,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        Gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        Age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="hobby != null">
+        Hobby = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="userface != null">
+        UserFace = #{userface,jdbcType=VARCHAR},
+      </if>
+      <if test="aboutme != null">
+        AboutMe = #{aboutme,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.charlie.college_bbs.bean.User">
+    update base_user
+    set UserName = #{username,jdbcType=VARCHAR},
+      RealName = #{realname,jdbcType=VARCHAR},
+      Password = #{password,jdbcType=VARCHAR},
+      RegisterDate = #{registerdate,jdbcType=BIGINT},
+      Enabled = #{enabled,jdbcType=BIT},
+      Email = #{email,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      CollegeID = #{collegeid,jdbcType=VARCHAR},
+      CollegeName = #{collegename,jdbcType=VARCHAR},
+      Gender = #{gender,jdbcType=VARCHAR},
+      Age = #{age,jdbcType=INTEGER},
+      Hobby = #{hobby,jdbcType=VARCHAR},
+      UserFace = #{userface,jdbcType=VARCHAR},
+      AboutMe = #{aboutme,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.charlie.college_bbs.bean.User">
+    update base_user
+    set UserName = #{username,jdbcType=VARCHAR},
+      RealName = #{realname,jdbcType=VARCHAR},
+      Password = #{password,jdbcType=VARCHAR},
+      RegisterDate = #{registerdate,jdbcType=BIGINT},
+      Enabled = #{enabled,jdbcType=BIT},
+      Email = #{email,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      CollegeID = #{collegeid,jdbcType=VARCHAR},
+      CollegeName = #{collegename,jdbcType=VARCHAR},
+      Gender = #{gender,jdbcType=VARCHAR},
+      Age = #{age,jdbcType=INTEGER},
+      Hobby = #{hobby,jdbcType=VARCHAR},
+      UserFace = #{userface,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

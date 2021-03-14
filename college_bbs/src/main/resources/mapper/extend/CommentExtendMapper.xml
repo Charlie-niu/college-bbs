@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.extend.CommentExtendMapper">
+
+  <select id="findCommentsByArticleID" parameterType="java.lang.Integer"
+          resultMap="com.charlie.college_bbs.dao.extend.CommentExtendMapper.CommentExtendResultMap">
+    select bc.ID, bc.Content, bc.ReleaseDate, bc.AuthorID, bc.BaseID, bc.ArticleID, bc.DiscussID, bu.UserName authorName
+    from bbs_comment bc, base_user bu
+    where  bc.AuthorID = bu.ID
+    and bc.ArticleID = #{articleid,jdbcType=INTEGER}
+  </select>
+  <select id="findCommentsByDiscussID" parameterType="java.lang.Integer"
+          resultMap="com.charlie.college_bbs.dao.extend.CommentExtendMapper.CommentExtendResultMap">
+    select bc.ID, bc.Content, bc.ReleaseDate, bc.AuthorID, bc.BaseID, bc.ArticleID, bc.DiscussID, bu.UserName authorName
+    from bbs_comment bc, base_user bu
+    where  bc.AuthorID = bu.ID
+    and DiscussID = #{discussid,jdbcType=INTEGER}
+  </select>
+
+  <resultMap id="CommentExtendResultMap" type="com.charlie.college_bbs.bean.extend.CommentExtend">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Content" jdbcType="VARCHAR" property="content" />
+    <result column="ReleaseDate" jdbcType="BIGINT" property="releasedate" />
+    <result column="AuthorID" jdbcType="INTEGER" property="authorid" />
+    <result column="BaseID" jdbcType="INTEGER" property="baseid" />
+    <result column="ArticleID" jdbcType="INTEGER" property="articleid" />
+    <result column="DiscussID" jdbcType="INTEGER" property="discussid" />
+    <result column="AuthorName" jdbcType="VARCHAR" property="authorName" />
+  </resultMap>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.extend.RoleExtendMapper">
+
+    <select id="selectAll" resultMap="com.charlie.college_bbs.dao.RoleMapper.BaseResultMap">
+        select
+        <include refid="com.charlie.college_bbs.dao.RoleMapper.Base_Column_List" />
+        from base_role
+    </select>
+
+    <select id="selectByRoleName" parameterType="String" resultMap="com.charlie.college_bbs.dao.RoleMapper.BaseResultMap">
+        select
+        <include refid="com.charlie.college_bbs.dao.RoleMapper.Base_Column_List" />
+        from base_role
+        where base_role.name = #{roleName,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

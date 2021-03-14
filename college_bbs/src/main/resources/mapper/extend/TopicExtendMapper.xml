@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.extend.TopicExtendMapper">
+
+    <select id="selectAll" resultMap="com.charlie.college_bbs.dao.TopicMapper.BaseResultMap">
+        select <include refid="com.charlie.college_bbs.dao.TopicMapper.Base_Column_List" />
+        from bbs_topic
+    </select>
+
+    <select id="selectTopicByTagId" parameterType="java.lang.String" resultMap="com.charlie.college_bbs.dao.TopicMapper.BaseResultMap">
+        select <include refid="com.charlie.college_bbs.dao.TopicMapper.Base_Column_List" />
+        from bbs_topic
+        where tagId like CONCAT('%',#{tagStr,jdbcType=VARCHAR},'%')
+    </select>
+
+    <select id="selectAllTopicByUser" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.TopicMapper.BaseResultMap">
+        select <include refid="com.charlie.college_bbs.dao.TopicMapper.Base_Column_List" />
+        from bbs_topic
+        where AuthorID = #{authorid,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAllElementWithNoSubmittedByUser" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.extend.TopicExtendMapper.TopicExtendResultMap">
+        select <include refid="com.charlie.college_bbs.dao.TopicMapper.Base_Column_List" />
+        from bbs_topic
+        where AuthorID = #{authorid,jdbcType=INTEGER}
+        and issubmitted = 0
+    </select>
+
+    <resultMap id="TopicExtendResultMap" type="com.charlie.college_bbs.bean.extend.TopicExtend"
+               extends="com.charlie.college_bbs.dao.TopicMapper.BaseResultMap">
+    </resultMap>
+
+</mapper>

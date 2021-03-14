@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.AttentionMapper">
+  <resultMap id="BaseResultMap" type="com.charlie.college_bbs.bean.Attention">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="UserID" jdbcType="INTEGER" property="userid" />
+    <result column="BodyID" jdbcType="INTEGER" property="bodyid" />
+    <result column="BodyType" jdbcType="VARCHAR" property="bodytype" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, UserID, BodyID, BodyType
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_attention
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bbs_attention
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.charlie.college_bbs.bean.Attention">
+    insert into bbs_attention (ID, UserID, BodyID, 
+      BodyType)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{bodyid,jdbcType=INTEGER}, 
+      #{bodytype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.charlie.college_bbs.bean.Attention">
+    insert into bbs_attention
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userid != null">
+        UserID,
+      </if>
+      <if test="bodyid != null">
+        BodyID,
+      </if>
+      <if test="bodytype != null">
+        BodyType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="bodyid != null">
+        #{bodyid,jdbcType=INTEGER},
+      </if>
+      <if test="bodytype != null">
+        #{bodytype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.charlie.college_bbs.bean.Attention">
+    update bbs_attention
+    <set>
+      <if test="userid != null">
+        UserID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="bodyid != null">
+        BodyID = #{bodyid,jdbcType=INTEGER},
+      </if>
+      <if test="bodytype != null">
+        BodyType = #{bodytype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.charlie.college_bbs.bean.Attention">
+    update bbs_attention
+    set UserID = #{userid,jdbcType=INTEGER},
+      BodyID = #{bodyid,jdbcType=INTEGER},
+      BodyType = #{bodytype,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

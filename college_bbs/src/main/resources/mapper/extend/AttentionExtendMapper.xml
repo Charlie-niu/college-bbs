@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.extend.AttentionExtendMapper">
+
+    <select id="selectAttention"
+            parameterType="com.charlie.college_bbs.bean.Attention"
+            resultMap="com.charlie.college_bbs.dao.AttentionMapper.BaseResultMap">
+        select <include refid="com.charlie.college_bbs.dao.AttentionMapper.Base_Column_List" />
+        from bbs_attention
+        where UserID = #{attention.userid}
+        and BodyID = #{attention.bodyid}
+        and BodyType = #{attention.bodytype}
+    </select>
+
+</mapper>

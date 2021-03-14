@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.extend.UserExtendMapper">
+
+  <resultMap id="UserResultMapWithRoles" extends="com.charlie.college_bbs.dao.UserMapper.BaseResultMap"
+             type="com.charlie.college_bbs.bean.extend.UserExtend">
+    <collection property="roles"
+                resultMap="com.charlie.college_bbs.dao.RoleMapper.BaseResultMap"></collection>
+  </resultMap>
+
+  <select id="selectUserByUsername" parameterType="java.lang.String"
+          resultMap="com.charlie.college_bbs.dao.extend.UserExtendMapper.UserResultMapWithRoles">
+    select
+        u.ID, u.UserName, u.RealName, u.Password, u.RegisterDate, u.Enabled, u.Email, u.Phone, u.CollegeID,
+    u.CollegeName, u.Gender, u.Age, u.Hobby, u.UserFace,
+        r.ID, r.Name, r.NameZh
+    from base_User u, base_UserRole ur, base_Role r
+    where u.UserName = #{username,jdbcType=VARCHAR}
+      AND u.ID = ur.UserID
+      AND r.ID = ur.RoleID
+  </select>
+
+  <select id="getUserRolesByUserID" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.RoleMapper.BaseResultMap">
+    select r.id, r.name, r.namezh
+    from base_role r , base_userrole ur
+    where r.id = ur.roleId and ur.userId=#{id}
+  </select>
+
+  <insert id="insertUserExtend" parameterType="com.charlie.college_bbs.bean.extend.UserExtend">
+    insert into base_user (ID, UserName, RealName, Password, RegisterDate,
+                Enabled, Email, Phone, CollegeID, CollegeName, Gender, Age, Hobby, UserFace, AboutMe)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{registerdate,jdbcType=BIGINT}, #{enabled,jdbcType=BIT},
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{collegeid,jdbcType=VARCHAR},
+      #{collegename,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},
+      #{hobby,jdbcType=VARCHAR}, #{userface,jdbcType=VARCHAR}, #{aboutme,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+
+  <insert id="insertUserRole">
+    insert into base_UserRole (UserID, RoleID)
+    values (
+            (select base_User.id from base_User where username = #{username,jdbcType=VARCHAR}),
+            (select base_Role.id from base_Role where name = #{rolename,jdbcType=VARCHAR})
+        )
+  </insert>
+  
+</mapper>

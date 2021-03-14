@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.charlie.college_bbs.bean.Article">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="PicUrl" jdbcType="VARCHAR" property="picurl" />
+    <result column="Title" jdbcType="VARCHAR" property="title" />
+    <result column="AuthorID" jdbcType="INTEGER" property="authorid" />
+    <result column="TagID" jdbcType="VARCHAR" property="tagid" />
+    <result column="Content" jdbcType="VARCHAR" property="content" />
+    <result column="IsSubmitted" jdbcType="BIT" property="issubmitted" />
+    <result column="ReleaseDate" jdbcType="BIGINT" property="releasedate" />
+    <result column="LastDate" jdbcType="BIGINT" property="lastdate" />
+    <result column="BrowseNumber" jdbcType="INTEGER" property="browsenumber" />
+    <result column="CommentNumber" jdbcType="INTEGER" property="commentnumber" />
+    <result column="AgreeNumber" jdbcType="INTEGER" property="agreenumber" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, PicUrl, Title, AuthorID, TagID, Content, IsSubmitted, ReleaseDate, LastDate, 
+    BrowseNumber, CommentNumber, AgreeNumber
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bbs_article
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bbs_article
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.charlie.college_bbs.bean.Article">
+    insert into bbs_article (ID, PicUrl, Title, 
+      AuthorID, TagID, Content, 
+      IsSubmitted, ReleaseDate, LastDate, 
+      BrowseNumber, CommentNumber, AgreeNumber
+      )
+    values (#{id,jdbcType=INTEGER}, #{picurl,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{authorid,jdbcType=INTEGER}, #{tagid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{issubmitted,jdbcType=BIT}, #{releasedate,jdbcType=BIGINT}, #{lastdate,jdbcType=BIGINT}, 
+      #{browsenumber,jdbcType=INTEGER}, #{commentnumber,jdbcType=INTEGER}, #{agreenumber,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.charlie.college_bbs.bean.Article">
+    insert into bbs_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="picurl != null">
+        PicUrl,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="authorid != null">
+        AuthorID,
+      </if>
+      <if test="tagid != null">
+        TagID,
+      </if>
+      <if test="content != null">
+        Content,
+      </if>
+      <if test="issubmitted != null">
+        IsSubmitted,
+      </if>
+      <if test="releasedate != null">
+        ReleaseDate,
+      </if>
+      <if test="lastdate != null">
+        LastDate,
+      </if>
+      <if test="browsenumber != null">
+        BrowseNumber,
+      </if>
+      <if test="commentnumber != null">
+        CommentNumber,
+      </if>
+      <if test="agreenumber != null">
+        AgreeNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="picurl != null">
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="authorid != null">
+        #{authorid,jdbcType=INTEGER},
+      </if>
+      <if test="tagid != null">
+        #{tagid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmitted != null">
+        #{issubmitted,jdbcType=BIT},
+      </if>
+      <if test="releasedate != null">
+        #{releasedate,jdbcType=BIGINT},
+      </if>
+      <if test="lastdate != null">
+        #{lastdate,jdbcType=BIGINT},
+      </if>
+      <if test="browsenumber != null">
+        #{browsenumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentnumber != null">
+        #{commentnumber,jdbcType=INTEGER},
+      </if>
+      <if test="agreenumber != null">
+        #{agreenumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.charlie.college_bbs.bean.Article">
+    update bbs_article
+    <set>
+      <if test="picurl != null">
+        PicUrl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="authorid != null">
+        AuthorID = #{authorid,jdbcType=INTEGER},
+      </if>
+      <if test="tagid != null">
+        TagID = #{tagid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="issubmitted != null">
+        IsSubmitted = #{issubmitted,jdbcType=BIT},
+      </if>
+      <if test="releasedate != null">
+        ReleaseDate = #{releasedate,jdbcType=BIGINT},
+      </if>
+      <if test="lastdate != null">
+        LastDate = #{lastdate,jdbcType=BIGINT},
+      </if>
+      <if test="browsenumber != null">
+        BrowseNumber = #{browsenumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentnumber != null">
+        CommentNumber = #{commentnumber,jdbcType=INTEGER},
+      </if>
+      <if test="agreenumber != null">
+        AgreeNumber = #{agreenumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.charlie.college_bbs.bean.Article">
+    update bbs_article
+    set PicUrl = #{picurl,jdbcType=VARCHAR},
+      Title = #{title,jdbcType=VARCHAR},
+      AuthorID = #{authorid,jdbcType=INTEGER},
+      TagID = #{tagid,jdbcType=VARCHAR},
+      Content = #{content,jdbcType=VARCHAR},
+      IsSubmitted = #{issubmitted,jdbcType=BIT},
+      ReleaseDate = #{releasedate,jdbcType=BIGINT},
+      LastDate = #{lastdate,jdbcType=BIGINT},
+      BrowseNumber = #{browsenumber,jdbcType=INTEGER},
+      CommentNumber = #{commentnumber,jdbcType=INTEGER},
+      AgreeNumber = #{agreenumber,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

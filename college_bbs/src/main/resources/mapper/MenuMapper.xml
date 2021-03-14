@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.charlie.college_bbs.bean.Menu">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="Path" jdbcType="VARCHAR" property="path" />
+    <result column="Component" jdbcType="VARCHAR" property="component" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="IconCls" jdbcType="VARCHAR" property="iconcls" />
+    <result column="KeepAlive" jdbcType="BIT" property="keepalive" />
+    <result column="RequireAuth" jdbcType="BIT" property="requireauth" />
+    <result column="parentID" jdbcType="INTEGER" property="parentid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, URL, Path, Component, Name, IconCls, KeepAlive, RequireAuth, parentID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_menu
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from base_menu
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.charlie.college_bbs.bean.Menu">
+    insert into base_menu (ID, URL, Path, 
+      Component, Name, IconCls, 
+      KeepAlive, RequireAuth, parentID
+      )
+    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{component,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{iconcls,jdbcType=VARCHAR}, 
+      #{keepalive,jdbcType=BIT}, #{requireauth,jdbcType=BIT}, #{parentid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.charlie.college_bbs.bean.Menu">
+    insert into base_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="path != null">
+        Path,
+      </if>
+      <if test="component != null">
+        Component,
+      </if>
+      <if test="name != null">
+        Name,
+      </if>
+      <if test="iconcls != null">
+        IconCls,
+      </if>
+      <if test="keepalive != null">
+        KeepAlive,
+      </if>
+      <if test="requireauth != null">
+        RequireAuth,
+      </if>
+      <if test="parentid != null">
+        parentID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iconcls != null">
+        #{iconcls,jdbcType=VARCHAR},
+      </if>
+      <if test="keepalive != null">
+        #{keepalive,jdbcType=BIT},
+      </if>
+      <if test="requireauth != null">
+        #{requireauth,jdbcType=BIT},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.charlie.college_bbs.bean.Menu">
+    update base_menu
+    <set>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        Path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        Component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iconcls != null">
+        IconCls = #{iconcls,jdbcType=VARCHAR},
+      </if>
+      <if test="keepalive != null">
+        KeepAlive = #{keepalive,jdbcType=BIT},
+      </if>
+      <if test="requireauth != null">
+        RequireAuth = #{requireauth,jdbcType=BIT},
+      </if>
+      <if test="parentid != null">
+        parentID = #{parentid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.charlie.college_bbs.bean.Menu">
+    update base_menu
+    set URL = #{url,jdbcType=VARCHAR},
+      Path = #{path,jdbcType=VARCHAR},
+      Component = #{component,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      IconCls = #{iconcls,jdbcType=VARCHAR},
+      KeepAlive = #{keepalive,jdbcType=BIT},
+      RequireAuth = #{requireauth,jdbcType=BIT},
+      parentID = #{parentid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.extend.ArticleExtendMapper">
+
+    <select id="selectAll" resultMap="com.charlie.college_bbs.dao.ArticleMapper.BaseResultMap">
+        select <include refid="com.charlie.college_bbs.dao.ArticleMapper.Base_Column_List" />
+        from bbs_article
+        where issubmitted = 1
+    </select>
+
+    <select id="selectByArticleName" parameterType="java.lang.String"
+            resultMap="com.charlie.college_bbs.dao.ArticleMapper.BaseResultMap">
+        select <include refid="com.charlie.college_bbs.dao.ArticleMapper.Base_Column_List" />
+        from bbs_article
+        where Title = #{title,jdbcType=VARCHAR}
+        and issubmitted = 1
+    </select>
+
+    <select id="selectArticleExtendByPrimaryKey" parameterType="java.lang.Integer" resultMap="ArticleExtendResultMap">
+        select <include refid="com.charlie.college_bbs.dao.ArticleMapper.Base_Column_List" />
+        from bbs_article
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectArticleExtendByUser" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.extend.ArticleExtendMapper.ArticleExtendResultMap">
+        select <include refid="com.charlie.college_bbs.dao.ArticleMapper.Base_Column_List" />
+        from bbs_article
+        where AuthorID = #{authorid,jdbcType=INTEGER}
+        and issubmitted = 1
+    </select>
+
+    <select id="selectAllElement" resultMap="com.charlie.college_bbs.dao.extend.ArticleExtendMapper.ArticleExtendResultMap">
+        select <include refid="com.charlie.college_bbs.dao.ArticleMapper.Base_Column_List" />
+        from bbs_article
+        where issubmitted = 1
+    </select>
+
+    <select id="selectAllElementWithNoSubmittedByUser" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.extend.ArticleExtendMapper.ArticleExtendResultMap">
+        select <include refid="com.charlie.college_bbs.dao.ArticleMapper.Base_Column_List" />
+        from bbs_article
+        where AuthorID = #{authorid,jdbcType=INTEGER}
+        and issubmitted = 0
+    </select>
+
+    <select id="selectAllAttentionArticleByUser" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.extend.ArticleExtendMapper.ArticleExtendResultMap">
+        select ba.ID, ba.PicUrl, ba.Title, ba.AuthorID, ba.TagID, ba.Content, ba.IsSubmitted, ba.ReleaseDate, ba.LastDate,
+                ba.BrowseNumber, ba.CommentNumber, ba.AgreeNumber
+        from bbs_article ba, (select * from bbs_attention where BodyType = "article") bat
+        where bat.BodyID = ba.ID
+        and bat.UserID = #{userid,jdbcType=INTEGER}
+        and ba.issubmitted = 1
+    </select>
+
+<!--    <update id="setArticleAgreenumber" parameterType="com.charlie.college_bbs.bean.Article">-->
+<!--    update bbs_article-->
+<!--    set-->
+<!--      AgreeNumber = #{agreenumber,jdbcType=INTEGER}-->
+<!--    where ID = #{id,jdbcType=INTEGER}-->
+<!--  </update>-->
+    <resultMap id="ArticleExtendResultMap" type="com.charlie.college_bbs.bean.extend.ArticleExtend">
+        <id column="ID" jdbcType="INTEGER" property="id" />
+        <result column="PicUrl" jdbcType="VARCHAR" property="picurl" />
+        <result column="Title" jdbcType="VARCHAR" property="title" />
+        <result column="AuthorID" jdbcType="INTEGER" property="authorid" />
+        <result column="TagID" jdbcType="VARCHAR" property="tagid" />
+        <result column="Content" jdbcType="VARCHAR" property="content" />
+        <result column="ReleaseDate" jdbcType="BIGINT" property="releasedate" />
+        <result column="LastDate" jdbcType="BIGINT" property="lastdate" />
+        <result column="BrowseNumber" jdbcType="INTEGER" property="browsenumber" />
+        <result column="CommentNumber" jdbcType="INTEGER" property="commentnumber" />
+        <result column="AgreeNumber" jdbcType="INTEGER" property="agreenumber" />
+    </resultMap>
+
+    <!-- 级联查询： -->
+
+    <!-- 注意这里需要修改 -->
+<!--    <select id="selectAllWithCategoryAndComments" resultMap="ArticleExtendResultMapWithCategory">-->
+<!--        SELECT <include refid="com.charlie.college_bbs.dao.ArticleMapper.Base_Column_List" />-->
+<!--        FROM cms_article-->
+<!--    </select>-->
+
+
+<!--    <select id="selectArticleByIdWithCategoryAndComments" parameterType="java.lang.Long"-->
+<!--            resultMap="ArticleExtendResultMapWithCategoryAndComments">-->
+<!--        SELECT <include refid="com.charlie.college_bbs.dao.ArticleMapper.Base_Column_List" />-->
+<!--        FROM cms_article-->
+<!--        WHERE id = #{id,jdbcType=BIGINT}-->
+<!--    </select>-->
+
+
+<!--    <resultMap id="ArticleExtendResultMapWithCategory"-->
+<!--               type="com.briup.apps.cms.bean.extend.ArticleExtend"-->
+<!--               extends="com.charlie.college_bbs.dao.ArticleMapper.BaseResultMap">-->
+
+<!--        <association property="category" column="category_id"-->
+<!--                     select="com.charlie.college_bbs.dao.CategoryMapper.selectByPrimaryKey"></association>-->
+
+<!--    </resultMap>-->
+
+
+<!--    <resultMap id="ArticleExtendResultMapWithCategoryAndComments"-->
+<!--               type="com.briup.apps.cms.bean.extend.ArticleExtend"-->
+<!--               extends="com.charlie.college_bbs.dao.ArticleMapper.BaseResultMap">-->
+
+<!--        <association property="category" column="category_id"-->
+<!--                     select="com.charlie.college_bbs.dao.CategoryMapper.selectByPrimaryKey"></association>-->
+
+<!--        &lt;!&ndash;通过articleId查找comments&ndash;&gt;-->
+<!--        <collection property="comments" column="id"-->
+<!--                    select="com.charlie.college_bbs.dao.extend.CommentExtendMapper.selectByArticleId"></collection>-->
+
+<!--    </resultMap>-->
+
+</mapper>

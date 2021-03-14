@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.extend.DiscussExtendMapper">
+
+    <select id="selectAll" resultMap="com.charlie.college_bbs.dao.DiscussMapper.BaseResultMap">
+        select <include refid="com.charlie.college_bbs.dao.DiscussMapper.Base_Column_List" />
+        from bbs_discuss
+        where issubmitted = 1
+    </select>
+
+    <select id="selectDiscussExtendByPrimaryKey" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.extend.DiscussExtendMapper.DiscussExtendResultMap">
+        select bd.ID, Topicname, bd.Content, bd.AuthorID, bd.TopicID, bd.ReleaseDate, bd.LastDate,
+                bd.BrowseNumber, bd.CommentNumber, bd.AgreeNumber
+        from bbs_discuss bd, bbs_topic bt
+        where bd.TopicID = bt.ID
+        and bd.issubmitted = 1
+        and bd.ID = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectDiscussWithTopicId" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.DiscussMapper.BaseResultMap">
+        select bd.ID, bd.Content, bd.AuthorID, bd.TopicID, bd.ReleaseDate, bd.LastDate,
+                bd.BrowseNumber, bd.CommentNumber, bd.AgreeNumber
+        from bbs_discuss bd, bbs_topic bt
+        where bd.TopicID = bt.ID
+        and bd.issubmitted = 1
+        and bd.TopicID = #{topicId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAllDiscussByUser" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.extend.DiscussExtendMapper.DiscussExtendResultMap">
+        select bd.ID, Topicname, bd.Content, bd.AuthorID, bd.TopicID, bd.ReleaseDate, bd.LastDate,
+                bd.BrowseNumber, bd.CommentNumber, bd.AgreeNumber
+        from bbs_discuss bd, bbs_topic bt
+        where bd.AuthorID = #{authorid,jdbcType=INTEGER}
+        and bd.TopicID = bt.ID
+        and bd.issubmitted = 1
+    </select>
+<!--    <select id="selectByDiscussName" parameterType="java.lang.String"-->
+<!--            resultMap="com.charlie.college_bbs.dao.DiscussMapper.BaseResultMap">-->
+<!--        select <include refid="com.charlie.college_bbs.dao.DiscussMapper.Base_Column_List" />-->
+<!--        from bbs_discuss-->
+<!--        where Title = #{title,jdbcType=VARCHAR}-->
+<!--    </select>-->
+
+    <update id="setDiscussAgreenumber" parameterType="com.charlie.college_bbs.bean.extend.DiscussExtend">
+    update bbs_discuss
+    set
+      AgreeNumber = #{agreenumber,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectAllElement" resultMap="com.charlie.college_bbs.dao.extend.DiscussExtendMapper.DiscussExtendResultMap">
+        select bd.ID, Topicname, bd.Content, bd.AuthorID, bd.TopicID, bd.ReleaseDate, bd.LastDate,
+                bd.BrowseNumber, bd.CommentNumber, bd.AgreeNumber
+        from bbs_discuss bd, bbs_topic bt
+        where bd.TopicID = bt.ID
+        and bd.issubmitted = 1
+    </select>
+
+    <select id="selectAllElementWithNoSubmittedByUser" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.extend.DiscussExtendMapper.DiscussExtendResultMap">
+        select bd.ID, Topicname, bd.Content, bd.AuthorID, bd.TopicID, bd.ReleaseDate, bd.LastDate,
+                bd.BrowseNumber, bd.CommentNumber, bd.AgreeNumber
+        from bbs_discuss bd, bbs_topic bt
+        where bd.TopicID = bt.ID
+        and bd.AuthorID = #{authorid,jdbcType=INTEGER}
+        and bd.issubmitted = 0
+    </select>
+
+
+    <select id="selectAllAttentionDiscussByUser" parameterType="java.lang.Integer"
+            resultMap="com.charlie.college_bbs.dao.extend.DiscussExtendMapper.DiscussExtendResultMap">
+        select bd.ID, Topicname, bd.Content, bd.IsSubmitted, bd.AuthorID, bd.TopicID, bd.ReleaseDate, bd.LastDate,
+                bd.BrowseNumber, bd.CommentNumber, bd.AgreeNumber
+        from bbs_discuss bd, bbs_topic bt, (select * from bbs_attention where BodyType = "discuss") ba
+        where bd.TopicID = bt.ID
+        and ba.BodyID = bd.ID
+        and ba.UserID = #{userid,jdbcType=INTEGER}
+        and bd.IsSubmitted = 1
+    </select>
+
+    <resultMap id="DiscussExtendResultMap" type="com.charlie.college_bbs.bean.extend.DiscussExtend">
+        <result column="ID" jdbcType="INTEGER" property="id" />
+        <result column="Topicname" jdbcType="VARCHAR" property="topicname" />
+        <result column="Content" jdbcType="VARCHAR" property="content" />
+        <result column="AuthorID" jdbcType="INTEGER" property="authorid" />
+        <result column="TopicID" jdbcType="INTEGER" property="topicid" />
+        <result column="ReleaseDate" jdbcType="BIGINT" property="releasedate" />
+        <result column="LastDate" jdbcType="BIGINT" property="lastdate" />
+        <result column="BrowseNumber" jdbcType="INTEGER" property="browsenumber" />
+        <result column="CommentNumber" jdbcType="INTEGER" property="commentnumber" />
+        <result column="AgreeNumber" jdbcType="INTEGER" property="agreenumber" />
+    </resultMap>
+
+    <sql id="Extend_Column_List">
+        ID, Topicname, Content, AuthorID, TopicID, ReleaseDate, LastDate, BrowseNumber, CommentNumber, AgreeNumber
+    </sql>
+</mapper>

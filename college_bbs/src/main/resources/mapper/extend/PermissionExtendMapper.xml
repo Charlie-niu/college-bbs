@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charlie.college_bbs.dao.PermissionExtendMapper">
+  <!--查询用户的权限-->
+  <select id="selectPermissionByUsername" parameterType="java.lang.String"
+          resultMap="com.charlie.college_bbs.dao.PermissionMapper.BaseResultMap">
+    select <include refid="com.charlie.college_bbs.dao.PermissionMapper.Base_Column_List" />
+    FROM base_permission, base_rolepermisson, base_role, base_userrole, base_user
+    WHERE
+      base_permission.ID = base_rolepermisson.PID
+      AND
+      base_rolepermisson.RID = base_role.ID
+      AND
+      base_role.ID = base_userrole.RoleID
+      AND
+      base_userrole.UserID = base_user.ID
+      AND
+      base_user.UserName = #{username,jdbcType=VARCHAR}
+
+  </select>
+
+
+</mapper>
